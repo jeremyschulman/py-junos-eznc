@@ -51,7 +51,7 @@ class Terminal(object):
         '(?P<passwd>assword:\s*$)',
         '(?P<badpasswd>ogin incorrect)',
         '(?P<netconf_closed><!-- session end at .*-->\s*)',
-        '(?P<shell>(% $))',
+        '(?P<shell>(% $)|(~ # $))',
         '(?P<cli>[^\\-"]>\s*$)',
         '(?P<option>Enter your option:\s*$)',
         '(?P<hotkey>connection: <CTRL>Z)',
@@ -133,6 +133,7 @@ class Terminal(object):
             raise RuntimeError('logout_sm_failure')
 
         prompt, found = self.read_prompt()
+        logger.warn("read: (%s, %s)" % (prompt, found))
 
         def _ev_login():
             # back at login prompt, so we are cleanly done!
